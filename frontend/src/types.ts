@@ -80,3 +80,27 @@ export interface Found {
 export interface DiscoveryResult {
   started_at: string; finished_at: string; found: Found[]; added: number; moved: number; errors: string[];
 }
+
+export interface VirtualString {
+  description: string | null; start_channel: number | null; pixels: number; group: number | null;
+  reverse: boolean | null; brightness: number | null; color_order: string | null; enabled: boolean;
+}
+export interface Port {
+  number: number; protocol: string | null; strings: VirtualString[];
+  current_ma: number | null; fuse_ok: boolean | null; enabled: boolean | null; pixels: number;
+}
+export interface OutputGroup {
+  name: string; enabled: boolean; start_channel: number | null; channel_count: number | null; ports: Port[];
+}
+export interface ActionSpec { id: string; label: string; danger: boolean; confirm: string | null }
+export interface HostDetail {
+  info: Record<string, string | number | boolean | null>;
+  outputs: OutputGroup[];
+  universes: { universe: number; start_channel: number | null; size: number | null; protocol: string | null; packets: number | null }[];
+  interfaces: { name: string; state: string; mac: string; addresses: string | null }[];
+  warnings: string[];
+  errors: string[];
+  has_logs: boolean;
+  actions: ActionSpec[];
+}
+export interface Endpoint { method: string; path: string; handler: string }

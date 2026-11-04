@@ -5,6 +5,7 @@ import "./styles.css";
 import { useSnapshot } from "./api";
 import Dashboard from "./pages/Dashboard";
 import Controllers from "./pages/Controllers";
+import ControllerDetail from "./pages/ControllerDetail";
 
 function App() {
   const { snap, connected } = useSnapshot();
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard snap={snap} />} />
           <Route path="/controllers" element={<Controllers snap={snap} />} />
+          <Route path="/hosts/:id" element={<ControllerDetail snap={snap} />} />
           <Route path="*" element={<p className="muted">Page not found.</p>} />
         </Routes>
       </main>

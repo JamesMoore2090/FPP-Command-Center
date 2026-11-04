@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { HostView, Sync } from "../types";
 import { bytes, duration, stripExt } from "../format";
 
@@ -30,7 +31,7 @@ export default function HostCard({ h, refVersion, tempWarn = 70 }: { h: HostView
       <header>
         <span className={`dot ${s.online ? "ok" : "bad"}`} title={s.online ? "Online" : s.error ?? "Offline"} />
         <div className="title">
-          <h3>{h.name}</h3>
+          <h3><Link to={`/hosts/${h.id}`} className="card-link">{h.name}</Link></h3>
           <a className="addr" href={`http://${h.address}/`} target="_blank" rel="noreferrer">{h.address}</a>
         </div>
         <span className={`badge role-${h.role ?? "unknown"}`}>{h.role ?? h.kind}</span>

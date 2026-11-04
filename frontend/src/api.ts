@@ -4,10 +4,9 @@ import type { Snapshot } from "./types";
 export class ApiError extends Error {}
 
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const r = await fetch(path, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
-  });
+  // Only send Content-Type with a body: FPP's PHP API 404s on GETs that carry Content-Type: application/json.
+  const headers = init?.body != null ? { "Content-Type": "application/json", ...(init?.headers || {}) } : init?.headers;
+  const r = await fetch(path, { ...init, headers });
   if (!r.ok) {
     let msg = `${r.status} ${r.statusText}`;
     try {

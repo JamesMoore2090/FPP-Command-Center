@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api } from "../api";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { ago } from "../format";
@@ -81,7 +82,7 @@ export default function Controllers({ snap }: { snap: Snapshot | null }) {
             ) : (
               <tr key={h.id} className={h.enabled ? "" : "disabled"}>
                 <td><span className={`dot ${!h.enabled ? "off" : h.status.online ? "ok" : "bad"}`} /></td>
-                <td>{h.name}{h.hostname && h.hostname !== h.name && <small className="muted"> {h.hostname}</small>}</td>
+                <td><Link to={`/hosts/${h.id}`}>{h.name}</Link>{h.hostname && h.hostname !== h.name && <small className="muted"> {h.hostname}</small>}</td>
                 <td><a href={`http://${h.address}/`} target="_blank" rel="noreferrer">{h.address}</a></td>
                 <td>{h.kind}</td>
                 <td>{h.role ?? "—"}</td>

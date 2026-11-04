@@ -1,0 +1,1620 @@
+{
+"source": "FPP v10.3 www/api/index.php + src/httpAPI.cpp",
+"endpoints": [
+{
+"method": "GET",
+"path": "",
+"handler": "ServeApiDocs"
+},
+{
+"method": "GET",
+"path": "api.html",
+"handler": "ServeApiHtml"
+},
+{
+"method": "GET",
+"path": "openapi.yaml",
+"handler": "ServeOpenApiSpec"
+},
+{
+"method": "GET",
+"path": "openapi.json",
+"handler": "ServeOpenApiSpec"
+},
+{
+"method": "GET",
+"path": "backups/list",
+"handler": "GetAvailableBackups"
+},
+{
+"method": "GET",
+"path": "backups/list/:DeviceName",
+"handler": "GetAvailableBackupsOnDevice"
+},
+{
+"method": "GET",
+"path": "backups/devices",
+"handler": "RetrieveAvailableBackupsDevices"
+},
+{
+"method": "POST",
+"path": "backups/devices/mount/:DeviceName/:MountLocation",
+"handler": "MountDevice"
+},
+{
+"method": "POST",
+"path": "backups/devices/unmount/:DeviceName/:MountLocation",
+"handler": "UnmountDevice"
+},
+{
+"method": "POST",
+"path": "backups/configuration",
+"handler": "MakeJSONBackup"
+},
+{
+"method": "GET",
+"path": "backups/configuration/list",
+"handler": "GetAvailableJSONBackups"
+},
+{
+"method": "GET",
+"path": "backups/configuration/list/:DeviceName",
+"handler": "GetAvailableJSONBackupsOnDevice"
+},
+{
+"method": "POST",
+"path": "backups/configuration/restore/:Directory/:BackupFilename",
+"handler": "RestoreJsonBackup"
+},
+{
+"method": "GET",
+"path": "backups/configuration/:Directory/:BackupFilename",
+"handler": "DownloadJsonBackup"
+},
+{
+"method": "DELETE",
+"path": "backups/configuration/:Directory/:BackupFilename",
+"handler": "DeleteJsonBackup"
+},
+{
+"method": "GET",
+"path": "cape",
+"handler": "GetCapeInfo"
+},
+{
+"method": "POST",
+"path": "cape/eeprom/voucher",
+"handler": "RedeemVoucher"
+},
+{
+"method": "POST",
+"path": "cape/eeprom/sign/:key/:order",
+"handler": "SignEEPROM"
+},
+{
+"method": "GET",
+"path": "cape/eeprom/signingData/:key/:order",
+"handler": "GetSigningData"
+},
+{
+"method": "GET",
+"path": "cape/eeprom/signingFile/:key/:order",
+"handler": "GetSigningFile"
+},
+{
+"method": "POST",
+"path": "cape/eeprom/signingData",
+"handler": "PostSigningData"
+},
+{
+"method": "POST",
+"path": "cape/licenseCheck",
+"handler": "RecordCapeLicenseCheck"
+},
+{
+"method": "GET",
+"path": "cape/options",
+"handler": "GetCapeOptions"
+},
+{
+"method": "GET",
+"path": "cape/defaults",
+"handler": "GetCapeDefaultSettings"
+},
+{
+"method": "GET",
+"path": "cape/eeprom/vendors",
+"handler": "GetEEPROMVendorLists"
+},
+{
+"method": "GET",
+"path": "cape/strings",
+"handler": "GetCapeStringOptions"
+},
+{
+"method": "GET",
+"path": "cape/panel",
+"handler": "GetCapePanelOptions"
+},
+{
+"method": "GET",
+"path": "cape/strings/:key",
+"handler": "GetCapeStringConfig"
+},
+{
+"method": "GET",
+"path": "cape/panel/:key",
+"handler": "GetCapePanelConfig"
+},
+{
+"method": "GET",
+"path": "channel/input/stats",
+"handler": "channel_input_get_stats"
+},
+{
+"method": "DELETE",
+"path": "channel/input/stats",
+"handler": "channel_input_delete_stats"
+},
+{
+"method": "GET",
+"path": "channel/output/processors",
+"handler": "channel_get_output_processors"
+},
+{
+"method": "POST",
+"path": "channel/output/processors",
+"handler": "channel_save_output_processors"
+},
+{
+"method": "GET",
+"path": "channel/output/serialDevices",
+"handler": "channel_get_serial_devices"
+},
+{
+"method": "GET",
+"path": "channel/output/:file",
+"handler": "channel_get_output"
+},
+{
+"method": "POST",
+"path": "channel/output/:file",
+"handler": "channel_save_output"
+},
+{
+"method": "GET",
+"path": "crashes/uploadTarget",
+"handler": "GetCrashUploadTarget"
+},
+{
+"method": "POST",
+"path": "crashes/upload/:file",
+"handler": "PostCrashUpload"
+},
+{
+"method": "POST",
+"path": "crashes/report",
+"handler": "PostCrashReport"
+},
+{
+"method": "GET",
+"path": "crashes/disclosures",
+"handler": "GetCrashDisclosures"
+},
+{
+"method": "GET",
+"path": "errorReport/preview",
+"handler": "GetErrorReportPreview"
+},
+{
+"method": "GET",
+"path": "configfile",
+"handler": "GetConfigFileList"
+},
+{
+"method": "GET",
+"path": "configfile/**",
+"handler": "DownloadConfigFile"
+},
+{
+"method": "POST",
+"path": "configfile/**",
+"handler": "UploadConfigFile"
+},
+{
+"method": "DELETE",
+"path": "configfile/**",
+"handler": "DeleteConfigFile"
+},
+{
+"method": "POST",
+"path": "dir/:DirName/:SubDir",
+"handler": "CreateDir"
+},
+{
+"method": "DELETE",
+"path": "dir/:DirName/:SubDir",
+"handler": "DeleteDir"
+},
+{
+"method": "GET",
+"path": "effects",
+"handler": "effects_list"
+},
+{
+"method": "GET",
+"path": "effects/ALL",
+"handler": "effects_list_ALL"
+},
+{
+"method": "POST",
+"path": "email/configure",
+"handler": "ConfigureEmail"
+},
+{
+"method": "POST",
+"path": "email/test",
+"handler": "SendTestEmail"
+},
+{
+"method": "GET",
+"path": "events",
+"handler": "events_list"
+},
+{
+"method": "GET",
+"path": "events/:eventId",
+"handler": "event_get"
+},
+{
+"method": "GET",
+"path": "events/:eventId/trigger",
+"handler": "event_trigger"
+},
+{
+"method": "POST",
+"path": "events/:eventId/trigger",
+"handler": "event_trigger"
+},
+{
+"method": "GET",
+"path": "files/Sequences/fps",
+"handler": "GetSequenceFPS"
+},
+{
+"method": "GET",
+"path": "files/:DirName",
+"handler": "GetFiles"
+},
+{
+"method": "GET",
+"path": "file/info/:plugin/:ext/**",
+"handler": "GetPluginFileInfo"
+},
+{
+"method": "GET",
+"path": "file/onUpload/:ext/**",
+"handler": "PluginFileOnUpload"
+},
+{
+"method": "GET",
+"path": "file/move/:fileName",
+"handler": "MoveFile"
+},
+{
+"method": "POST",
+"path": "file/move/:fileName",
+"handler": "MoveFile"
+},
+{
+"method": "GET",
+"path": "files/zip/:DirNames",
+"handler": "GetZipDir"
+},
+{
+"method": "POST",
+"path": "file/:DirName/copy/:source/:dest",
+"handler": "files_copy"
+},
+{
+"method": "POST",
+"path": "file/:DirName/rename/:source/:dest",
+"handler": "files_rename"
+},
+{
+"method": "GET",
+"path": "file/:DirName/tailfollow/**",
+"handler": "TailFollowFile"
+},
+{
+"method": "GET",
+"path": "file/:DirName/**",
+"handler": "GetFile"
+},
+{
+"method": "DELETE",
+"path": "file/:DirName/**",
+"handler": "DeleteFile"
+},
+{
+"method": "POST",
+"path": "file/:DirName",
+"handler": "PatchFile"
+},
+{
+"method": "POST",
+"path": "file/:DirName/:Name",
+"handler": "PostFile"
+},
+{
+"method": "GET",
+"path": "git/originLog",
+"handler": "GetGitOriginLog"
+},
+{
+"method": "GET",
+"path": "git/releases/os/:All",
+"handler": "GitOSReleases"
+},
+{
+"method": "GET",
+"path": "git/releases/notes/:tag",
+"handler": "GitOSReleaseNotes"
+},
+{
+"method": "GET",
+"path": "git/releases/sizes",
+"handler": "GitOSReleaseSizes"
+},
+{
+"method": "GET",
+"path": "git/reset",
+"handler": "GitReset"
+},
+{
+"method": "POST",
+"path": "git/reset",
+"handler": "GitReset"
+},
+{
+"method": "GET",
+"path": "git/status",
+"handler": "GitStatus"
+},
+{
+"method": "GET",
+"path": "git/branches",
+"handler": "GitBranches"
+},
+{
+"method": "GET",
+"path": "git/forkBranches",
+"handler": "GitForkBranches"
+},
+{
+"method": "GET",
+"path": "git/pullRequests",
+"handler": "GitPullRequests"
+},
+{
+"method": "GET",
+"path": "media",
+"handler": "GetMedia"
+},
+{
+"method": "GET",
+"path": "media/:MediaName/duration",
+"handler": "GetMediaDuration"
+},
+{
+"method": "GET",
+"path": "media/:MediaName/meta",
+"handler": "GetMediaMetaData"
+},
+{
+"method": "GET",
+"path": "network/dns",
+"handler": "network_get_dns"
+},
+{
+"method": "POST",
+"path": "network/dns",
+"handler": "network_save_dns"
+},
+{
+"method": "GET",
+"path": "network/gateway",
+"handler": "network_get_gateway"
+},
+{
+"method": "POST",
+"path": "network/gateway",
+"handler": "network_save_gateway"
+},
+{
+"method": "GET",
+"path": "network/interface",
+"handler": "network_list_interfaces"
+},
+{
+"method": "GET",
+"path": "network/interface/:interface",
+"handler": "network_get_interface"
+},
+{
+"method": "GET",
+"path": "network/interface/add/:interface",
+"handler": "network_add_interface"
+},
+{
+"method": "POST",
+"path": "network/interface/:interface",
+"handler": "network_set_interface"
+},
+{
+"method": "POST",
+"path": "network/interface/:interface/apply",
+"handler": "network_apply_interface"
+},
+{
+"method": "POST",
+"path": "network/interface/add/:interface",
+"handler": "network_add_interface"
+},
+{
+"method": "DELETE",
+"path": "network/interface/:interface",
+"handler": "network_delete_interface"
+},
+{
+"method": "DELETE",
+"path": "network/presisentNames",
+"handler": "network_persistentNames_delete"
+},
+{
+"method": "POST",
+"path": "network/presisentNames",
+"handler": "network_persistentNames_create"
+},
+{
+"method": "DELETE",
+"path": "network/persistentNames",
+"handler": "network_persistentNames_delete"
+},
+{
+"method": "POST",
+"path": "network/persistentNames",
+"handler": "network_persistentNames_create"
+},
+{
+"method": "GET",
+"path": "network/wifi/scan/:interface",
+"handler": "network_wifi_scan"
+},
+{
+"method": "GET",
+"path": "network/wifi/status/:interface",
+"handler": "network_wifi_status"
+},
+{
+"method": "GET",
+"path": "network/wifi/strength",
+"handler": "network_wifi_strength"
+},
+{
+"method": "GET",
+"path": "options/:SettingName",
+"handler": "GetOptions"
+},
+{
+"method": "GET",
+"path": "audio/cardaliases",
+"handler": "GetAudioCardAliases"
+},
+{
+"method": "POST",
+"path": "audio/cardaliases",
+"handler": "SaveAudioCardAliases"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/groups",
+"handler": "GetPipeWireAudioGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/groups",
+"handler": "SavePipeWireAudioGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/groups/apply",
+"handler": "ApplyPipeWireAudioGroups"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/sinks",
+"handler": "GetPipeWireSinks"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/cards",
+"handler": "GetPipeWireAudioCards"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/usb-check",
+"handler": "GetUsbAudioBandwidthCheck"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/sources",
+"handler": "GetPipeWireAudioSources"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/plugin-sources",
+"handler": "GetPipeWirePluginSources"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/input-groups",
+"handler": "GetPipeWireInputGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-groups",
+"handler": "SavePipeWireInputGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-groups/apply",
+"handler": "ApplyPipeWireInputGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-groups/volume",
+"handler": "SetInputGroupMemberVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-group/volume",
+"handler": "SetInputGroupVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-groups/effects",
+"handler": "SaveInputGroupEffects"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/input-groups/eq/update",
+"handler": "UpdateInputGroupEQRealtime"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/routing",
+"handler": "GetRoutingMatrix"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/routing",
+"handler": "SaveRoutingMatrix"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/routing/volume",
+"handler": "SetRoutingPathVolume"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/routing/presets",
+"handler": "GetRoutingPresets"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/routing/presets/names",
+"handler": "GetRoutingPresetNames"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/routing/presets",
+"handler": "SaveRoutingPreset"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/routing/presets/load",
+"handler": "LoadRoutingPreset"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/routing/presets/live-apply",
+"handler": "LiveApplyRoutingPreset"
+},
+{
+"method": "DELETE",
+"path": "pipewire/audio/routing/presets/:name",
+"handler": "DeleteRoutingPreset"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/stream/volume",
+"handler": "SetStreamSlotVolume"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/stream/status",
+"handler": "GetStreamSlotStatus"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/stream/volumes",
+"handler": "GetStreamSlotVolumes"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/group/volume",
+"handler": "SetPipeWireGroupVolume"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/node-states",
+"handler": "GetPipeWireNodeStates"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/targets",
+"handler": "GetPipeWireVolumeTargets"
+},
+{
+"method": "GET",
+"path": "pipewire/audio/preview",
+"handler": "GetPipeWireAudioPreview"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/meters",
+"handler": "SetPipeWireAudioMeters"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/eq/update",
+"handler": "UpdatePipeWireEQRealtime"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/delay/update",
+"handler": "UpdatePipeWireDelayRealtime"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/sync/start",
+"handler": "StartSyncCalibration"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/sync/stop",
+"handler": "StopSyncCalibration"
+},
+{
+"method": "POST",
+"path": "pipewire/audio/services/restart",
+"handler": "RestartPipeWireServices"
+},
+{
+"method": "GET",
+"path": "pipewire/video/groups",
+"handler": "GetPipeWireVideoGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/video/groups",
+"handler": "SavePipeWireVideoGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/video/groups/apply",
+"handler": "ApplyPipeWireVideoGroups"
+},
+{
+"method": "POST",
+"path": "pipewire/simple/apply",
+"handler": "ApplyPipeWireSimpleConfig"
+},
+{
+"method": "GET",
+"path": "pipewire/video/connectors",
+"handler": "GetVideoOutputTargets"
+},
+{
+"method": "GET",
+"path": "pipewire/video/routing",
+"handler": "GetVideoRoutingMatrix"
+},
+{
+"method": "POST",
+"path": "pipewire/video/routing",
+"handler": "SaveVideoRoutingMatrix"
+},
+{
+"method": "GET",
+"path": "pipewire/video/input-sources",
+"handler": "GetPipeWireVideoInputSources"
+},
+{
+"method": "POST",
+"path": "pipewire/video/input-sources",
+"handler": "SavePipeWireVideoInputSources"
+},
+{
+"method": "POST",
+"path": "pipewire/video/input-sources/apply",
+"handler": "ApplyPipeWireVideoInputSources"
+},
+{
+"method": "GET",
+"path": "pipewire/video/input-sources/v4l2-devices",
+"handler": "GetV4L2Devices"
+},
+{
+"method": "GET",
+"path": "pipewire/video/input-sources/:id/preview",
+"handler": "GetVideoInputPreview"
+},
+{
+"method": "GET",
+"path": "pipewire/aes67/instances",
+"handler": "GetAES67Instances"
+},
+{
+"method": "POST",
+"path": "pipewire/aes67/instances",
+"handler": "SaveAES67Instances"
+},
+{
+"method": "POST",
+"path": "pipewire/aes67/apply",
+"handler": "ApplyAES67Instances"
+},
+{
+"method": "GET",
+"path": "pipewire/aes67/status",
+"handler": "GetAES67Status"
+},
+{
+"method": "GET",
+"path": "pipewire/aes67/interfaces",
+"handler": "GetAES67NetworkInterfaces"
+},
+{
+"method": "GET",
+"path": "pipewire/aes67/sdp",
+"handler": "GetAES67SDP"
+},
+{
+"method": "GET",
+"path": "pipewire/aes67/sdp/:InstanceId",
+"handler": "GetAES67SDPFile"
+},
+{
+"method": "GET",
+"path": "pipewire/rtspoutputs",
+"handler": "GetRTSPOutputs"
+},
+{
+"method": "GET",
+"path": "pipewire/rtspoutputs/status",
+"handler": "GetRTSPOutputsStatus"
+},
+{
+"method": "POST",
+"path": "pipewire/rtspoutputs/apply",
+"handler": "ApplyRTSPOutputs"
+},
+{
+"method": "POST",
+"path": "pipewire/rtspoutputs",
+"handler": "SaveRTSPOutputs"
+},
+{
+"method": "GET",
+"path": "pipewire/opusrtp/instances",
+"handler": "GetOpusRTPInstances"
+},
+{
+"method": "POST",
+"path": "pipewire/opusrtp/instances",
+"handler": "SaveOpusRTPInstances"
+},
+{
+"method": "POST",
+"path": "pipewire/opusrtp/apply",
+"handler": "ApplyOpusRTPInstances"
+},
+{
+"method": "GET",
+"path": "pipewire/opusrtp/status",
+"handler": "GetOpusRTPStatus"
+},
+{
+"method": "GET",
+"path": "pipewire/opusrtp/interfaces",
+"handler": "GetOpusRTPNetworkInterfaces"
+},
+{
+"method": "GET",
+"path": "pipewire/vban/instances",
+"handler": "GetVBANInstances"
+},
+{
+"method": "POST",
+"path": "pipewire/vban/instances",
+"handler": "SaveVBANInstances"
+},
+{
+"method": "POST",
+"path": "pipewire/vban/apply",
+"handler": "ApplyVBANInstances"
+},
+{
+"method": "GET",
+"path": "pipewire/vban/status",
+"handler": "GetVBANStatus"
+},
+{
+"method": "GET",
+"path": "pipewire/vban/interfaces",
+"handler": "GetVBANNetworkInterfaces"
+},
+{
+"method": "GET",
+"path": "pipewire/graph",
+"handler": "GetPipeWireGraph"
+},
+{
+"method": "GET",
+"path": "pipewire/control/status",
+"handler": "PWCtl_GetStatus"
+},
+{
+"method": "GET",
+"path": "pipewire/control/groups",
+"handler": "PWCtl_GetGroups"
+},
+{
+"method": "GET",
+"path": "pipewire/control/groups/:id",
+"handler": "PWCtl_GetGroup"
+},
+{
+"method": "POST",
+"path": "pipewire/control/groups/:id/volume",
+"handler": "PWCtl_SetGroupVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/control/groups/:id/mute",
+"handler": "PWCtl_SetGroupMute"
+},
+{
+"method": "POST",
+"path": "pipewire/control/groups/:id/members/:cardId/volume",
+"handler": "PWCtl_SetMemberVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/control/groups/:id/members/:cardId/mute",
+"handler": "PWCtl_SetMemberMute"
+},
+{
+"method": "GET",
+"path": "pipewire/control/input-groups",
+"handler": "PWCtl_GetInputGroups"
+},
+{
+"method": "GET",
+"path": "pipewire/control/input-groups/:id",
+"handler": "PWCtl_GetInputGroup"
+},
+{
+"method": "POST",
+"path": "pipewire/control/input-groups/:id/members/:memberIndex/volume",
+"handler": "PWCtl_SetInputMemberVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/control/input-groups/:id/members/:memberIndex/mute",
+"handler": "PWCtl_SetInputMemberMute"
+},
+{
+"method": "GET",
+"path": "pipewire/control/streams",
+"handler": "PWCtl_GetStreams"
+},
+{
+"method": "POST",
+"path": "pipewire/control/streams/:slot/volume",
+"handler": "PWCtl_SetStreamVolume"
+},
+{
+"method": "GET",
+"path": "pipewire/control/routing",
+"handler": "PWCtl_GetRouting"
+},
+{
+"method": "POST",
+"path": "pipewire/control/routing/:inputGroupId/:outputGroupId/volume",
+"handler": "PWCtl_SetRoutingVolume"
+},
+{
+"method": "POST",
+"path": "pipewire/control/routing/:inputGroupId/:outputGroupId/mute",
+"handler": "PWCtl_SetRoutingMute"
+},
+{
+"method": "GET",
+"path": "playlists",
+"handler": "playlist_list"
+},
+{
+"method": "POST",
+"path": "playlists",
+"handler": "playlist_insert"
+},
+{
+"method": "GET",
+"path": "playlists/playable",
+"handler": "playlist_playable"
+},
+{
+"method": "GET",
+"path": "playlists/validate",
+"handler": "playlist_list_validate"
+},
+{
+"method": "POST",
+"path": "validate/commands",
+"handler": "validate_commands"
+},
+{
+"method": "GET",
+"path": "playlists/stop",
+"handler": "playlist_stop"
+},
+{
+"method": "GET",
+"path": "playlists/pause",
+"handler": "playlist_pause"
+},
+{
+"method": "GET",
+"path": "playlists/resume",
+"handler": "playlist_resume"
+},
+{
+"method": "GET",
+"path": "playlists/stopgracefully",
+"handler": "playlist_stopgracefully"
+},
+{
+"method": "GET",
+"path": "playlists/stopgracefullyafterloop",
+"handler": "playlist_stopgracefullyafterloop"
+},
+{
+"method": "POST",
+"path": "playlists/stop",
+"handler": "playlist_stop"
+},
+{
+"method": "POST",
+"path": "playlists/pause",
+"handler": "playlist_pause"
+},
+{
+"method": "POST",
+"path": "playlists/resume",
+"handler": "playlist_resume"
+},
+{
+"method": "POST",
+"path": "playlists/stopgracefully",
+"handler": "playlist_stopgracefully"
+},
+{
+"method": "POST",
+"path": "playlists/stopgracefullyafterloop",
+"handler": "playlist_stopgracefullyafterloop"
+},
+{
+"method": "GET",
+"path": "playlist/:PlaylistName",
+"handler": "playlist_get"
+},
+{
+"method": "GET",
+"path": "playlist/:PlaylistName/start",
+"handler": "playlist_start"
+},
+{
+"method": "GET",
+"path": "playlist/:PlaylistName/start/:Repeat",
+"handler": "playlist_start_repeat"
+},
+{
+"method": "GET",
+"path": "playlist/:PlaylistName/start/:Repeat/:ScheduleProtected",
+"handler": "playlist_start_repeat_protected"
+},
+{
+"method": "POST",
+"path": "playlist/:PlaylistName",
+"handler": "playlist_update"
+},
+{
+"method": "DELETE",
+"path": "playlist/:PlaylistName",
+"handler": "playlist_delete"
+},
+{
+"method": "POST",
+"path": "playlist/:PlaylistName/:SectionName/item",
+"handler": "PlaylistSectionInsertItem"
+},
+{
+"method": "POST",
+"path": "playlist/:PlaylistName/start",
+"handler": "playlist_start"
+},
+{
+"method": "POST",
+"path": "playlist/:PlaylistName/start/:Repeat",
+"handler": "playlist_start_repeat"
+},
+{
+"method": "POST",
+"path": "playlist/:PlaylistName/start/:Repeat/:ScheduleProtected",
+"handler": "playlist_start_repeat_protected"
+},
+{
+"method": "GET",
+"path": "playlist/repeat/:Repeat",
+"handler": "playlist_repeat"
+},
+{
+"method": "POST",
+"path": "playlist/repeat/:Repeat",
+"handler": "playlist_repeat"
+},
+{
+"method": "GET",
+"path": "plugin/headerIndicators",
+"handler": "GetPluginHeaderIndicators"
+},
+{
+"method": "GET",
+"path": "plugin",
+"handler": "GetInstalledPlugins"
+},
+{
+"method": "POST",
+"path": "plugin",
+"handler": "InstallPlugin"
+},
+{
+"method": "POST",
+"path": "plugin/fetchInfo",
+"handler": "FetchPluginInfoProxy"
+},
+{
+"method": "GET",
+"path": "plugin/popularity",
+"handler": "GetPluginPopularity"
+},
+{
+"method": "GET",
+"path": "plugin/githubStats",
+"handler": "GetPluginGitHubStats"
+},
+{
+"method": "GET",
+"path": "plugin/source",
+"handler": "GetPluginSource"
+},
+{
+"method": "GET",
+"path": "plugin/updateStatus",
+"handler": "GetPluginUpdateStatus"
+},
+{
+"method": "POST",
+"path": "plugin/updateStatus/refresh",
+"handler": "RefreshPluginUpdateStatus"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName",
+"handler": "GetPluginInfo"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/icon",
+"handler": "PluginServeIcon"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/page",
+"handler": "GetPluginPageUrl"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/privacy",
+"handler": "GetPluginPrivacyStatus"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/releaseNotes",
+"handler": "GetPluginReleaseNotes"
+},
+{
+"method": "DELETE",
+"path": "plugin/:RepoName",
+"handler": "UninstallPlugin"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/settings/:SettingName",
+"handler": "PluginGetSetting"
+},
+{
+"method": "PUT",
+"path": "plugin/:RepoName/settings/:SettingName",
+"handler": "PluginSetSetting"
+},
+{
+"method": "POST",
+"path": "plugin/:RepoName/settings/:SettingName",
+"handler": "PluginSetSetting"
+},
+{
+"method": "POST",
+"path": "plugin/:RepoName/updates",
+"handler": "CheckForPluginUpdates"
+},
+{
+"method": "GET",
+"path": "plugin/:RepoName/upgrade",
+"handler": "UpgradePlugin"
+},
+{
+"method": "POST",
+"path": "plugin/:RepoName/upgrade",
+"handler": "UpgradePlugin"
+},
+{
+"method": "GET",
+"path": "proxies",
+"handler": "GetProxies"
+},
+{
+"method": "POST",
+"path": "proxies",
+"handler": "PostProxies"
+},
+{
+"method": "DELETE",
+"path": "proxies",
+"handler": "DeleteAllProxies"
+},
+{
+"method": "POST",
+"path": "proxies/:ProxyIp",
+"handler": "AddProxy"
+},
+{
+"method": "DELETE",
+"path": "proxies/:ProxyIp",
+"handler": "DeleteProxy"
+},
+{
+"method": "GET",
+"path": "remotes",
+"handler": "GetRemotes"
+},
+{
+"method": "GET",
+"path": "remoteAction",
+"handler": "remoteAction"
+},
+{
+"method": "POST",
+"path": "remoteAction",
+"handler": "remoteAction"
+},
+{
+"method": "GET",
+"path": "geoip",
+"handler": "GetGeoIP"
+},
+{
+"method": "GET",
+"path": "sequence",
+"handler": "GetSequences"
+},
+{
+"method": "GET",
+"path": "sequence/current/step",
+"handler": "GetSequenceStep"
+},
+{
+"method": "GET",
+"path": "sequence/current/stop",
+"handler": "GetSequenceStop"
+},
+{
+"method": "GET",
+"path": "sequence/current/togglePause",
+"handler": "GetSequenceTogglePause"
+},
+{
+"method": "POST",
+"path": "sequence/current/stop",
+"handler": "GetSequenceStop"
+},
+{
+"method": "POST",
+"path": "sequence/current/togglePause",
+"handler": "GetSequenceTogglePause"
+},
+{
+"method": "GET",
+"path": "sequence/:SequenceName",
+"handler": "GetSequence"
+},
+{
+"method": "GET",
+"path": "sequence/:SequenceName/meta",
+"handler": "GetSequenceMetaData"
+},
+{
+"method": "GET",
+"path": "sequence/:SequenceName/start/:startSecond",
+"handler": "GetSequenceStart"
+},
+{
+"method": "POST",
+"path": "sequence/:SequenceName",
+"handler": "PostSequence"
+},
+{
+"method": "POST",
+"path": "sequence/:SequenceName/start/:startSecond",
+"handler": "GetSequenceStart"
+},
+{
+"method": "DELETE",
+"path": "sequence/:SequenceName",
+"handler": "DeleteSequences"
+},
+{
+"method": "POST",
+"path": "schedule/reload",
+"handler": "ReloadSchedule"
+},
+{
+"method": "GET",
+"path": "schedule",
+"handler": "GetSchedule"
+},
+{
+"method": "POST",
+"path": "schedule",
+"handler": "SaveSchedule"
+},
+{
+"method": "GET",
+"path": "settings",
+"handler": "GetSettings"
+},
+{
+"method": "POST",
+"path": "settings/fanThermal/reset",
+"handler": "ResetFanThermalTrips"
+},
+{
+"method": "GET",
+"path": "settings/:SettingName",
+"handler": "GetSetting"
+},
+{
+"method": "GET",
+"path": "settings/:SettingName/options",
+"handler": "GetOptions"
+},
+{
+"method": "PUT",
+"path": "settings/:SettingName",
+"handler": "PutSetting"
+},
+{
+"method": "PUT",
+"path": "settings/:SettingName/jsonValueUpdate",
+"handler": "UpdateJSONValueSetting"
+},
+{
+"method": "GET",
+"path": "scripts",
+"handler": "scripts_list"
+},
+{
+"method": "GET",
+"path": "scripts/:scriptName",
+"handler": "script_get"
+},
+{
+"method": "POST",
+"path": "scripts/:scriptName",
+"handler": "script_save"
+},
+{
+"method": "GET",
+"path": "scripts/:scriptName/run",
+"handler": "script_run"
+},
+{
+"method": "POST",
+"path": "scripts/:scriptName/run",
+"handler": "script_run"
+},
+{
+"method": "GET",
+"path": "statistics/usage",
+"handler": "stats_get_last_file"
+},
+{
+"method": "POST",
+"path": "statistics/usage",
+"handler": "stats_publish_stats_file"
+},
+{
+"method": "DELETE",
+"path": "statistics/usage",
+"handler": "stats_delete_last_file"
+},
+{
+"method": "GET",
+"path": "system/fppd/restart",
+"handler": "RestartFPPD"
+},
+{
+"method": "GET",
+"path": "system/fppd/start",
+"handler": "StartFPPD"
+},
+{
+"method": "GET",
+"path": "system/fppd/stop",
+"handler": "StopFPPD"
+},
+{
+"method": "POST",
+"path": "system/fppd/restart",
+"handler": "RestartFPPD"
+},
+{
+"method": "POST",
+"path": "system/fppd/start",
+"handler": "StartFPPD"
+},
+{
+"method": "POST",
+"path": "system/fppd/stop",
+"handler": "StopFPPD"
+},
+{
+"method": "GET",
+"path": "system/fppd/restartStatus",
+"handler": "GetFPPDRestartStatus"
+},
+{
+"method": "POST",
+"path": "system/fppd/skipBootDelay",
+"handler": "SkipBootDelay"
+},
+{
+"method": "GET",
+"path": "system/reboot",
+"handler": "RebootDevice"
+},
+{
+"method": "POST",
+"path": "system/reboot",
+"handler": "RebootDevice"
+},
+{
+"method": "GET",
+"path": "system/releaseNotes/:version",
+"handler": "ViewReleaseNotes"
+},
+{
+"method": "GET",
+"path": "system/shutdown",
+"handler": "SystemShutdownOS"
+},
+{
+"method": "POST",
+"path": "system/shutdown",
+"handler": "SystemShutdownOS"
+},
+{
+"method": "GET",
+"path": "system/status",
+"handler": "SystemGetStatus"
+},
+{
+"method": "GET",
+"path": "system/updateStatus",
+"handler": "GetUpdateStatus"
+},
+{
+"method": "GET",
+"path": "system/updateActivity",
+"handler": "GetUpdateActivity"
+},
+{
+"method": "GET",
+"path": "system/info",
+"handler": "SystemGetInfo"
+},
+{
+"method": "GET",
+"path": "system/volume",
+"handler": "SystemGetAudio"
+},
+{
+"method": "POST",
+"path": "system/volume",
+"handler": "SystemSetAudio"
+},
+{
+"method": "POST",
+"path": "system/proxies",
+"handler": "PostProxies"
+},
+{
+"method": "GET",
+"path": "system/proxies",
+"handler": "GetProxies"
+},
+{
+"method": "GET",
+"path": "system/packages",
+"handler": "GetOSpackages"
+},
+{
+"method": "GET",
+"path": "system/packages/info/:packageName",
+"handler": "GetOSpackageInfo"
+},
+{
+"method": "GET",
+"path": "testmode",
+"handler": "testMode_Get"
+},
+{
+"method": "POST",
+"path": "testmode",
+"handler": "testMode_Set"
+},
+{
+"method": "GET",
+"path": "time",
+"handler": "GetTime"
+},
+{
+"method": "GET",
+"path": "privacy/consent",
+"handler": "GetConsent"
+},
+{
+"method": "POST",
+"path": "privacy/consent",
+"handler": "RecordConsent"
+},
+{
+"method": "GET",
+"path": "fppd/status",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/version",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/multiSyncSystems",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/multiSyncStats",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/e131stats",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/log",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/outputs",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/playlists",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/playlist/config",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/schedule",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/sequence",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/volume",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/warnings",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/warnings_full",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/effects",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/mqtt/cache",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/recurringtasks",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/ports",
+"handler": "fppd"
+},
+{
+"method": "GET",
+"path": "fppd/ports/list",
+"handler": "fppd"
+}
+]
+}

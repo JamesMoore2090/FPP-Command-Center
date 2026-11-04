@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from . import __version__
-from .api import hosts, ws
+from .api import controllers, hosts, ws
 from .collector import Collector
 from .config import get_settings
 from .db import Base, SessionLocal, engine
@@ -31,6 +31,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="FPP Command Center", version=__version__, lifespan=lifespan,
               docs_url="/api/docs", redoc_url=None, openapi_url="/api/openapi.json")
 app.include_router(hosts.router)
+app.include_router(controllers.router)
 app.include_router(ws.router)
 
 
