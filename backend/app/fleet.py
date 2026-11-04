@@ -93,7 +93,8 @@ def find_player(hosts: list[HostInfo], states: dict[int, HostStatus]) -> HostInf
     return players[0] if players else None
 
 
-def build_snapshot(hosts: list[HostInfo], states: dict[int, HostStatus], settings: Settings) -> Snapshot:
+def build_snapshot(hosts: list[HostInfo], states: dict[int, HostStatus], settings: Settings,
+                   extra_alerts: list[Alert] | None = None) -> Snapshot:
     hosts = [h for h in hosts if h.enabled]
     player = find_player(hosts, states)
     pstate = states.get(player.id) if player else None
@@ -132,6 +133,7 @@ def build_snapshot(hosts: list[HostInfo], states: dict[int, HostStatus], setting
         playing=sum(v.status.status == "playing" for v in views),
         version_majority=reference_version,
     )
+    alerts.extend(extra_alerts or [])
     sev_rank = {"critical": 0, "warning": 1, "info": 2}
     alerts.sort(key=lambda a: sev_rank.get(a.severity, 9))
     return Snapshot(ts=datetime.now(timezone.utc), banner=banner, summary=summary, alerts=alerts, hosts=views)

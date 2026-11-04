@@ -104,3 +104,30 @@ export interface HostDetail {
   actions: ActionSpec[];
 }
 export interface Endpoint { method: string; path: string; handler: string }
+
+export interface Backup {
+  id: number; host_id: number | null; host_name: string; kind: string; created_at: string;
+  trigger: "scheduled" | "manual" | "pre-restore"; status: "ok" | "failed" | "skipped"; error: string | null;
+  size: number | null; changed: boolean | null; version: string | null; platform: string | null;
+  pinned: boolean; note: string | null;
+}
+export interface HostBackupStatus {
+  host_id: number; host_name: string; kind: string; enabled: boolean; running: boolean;
+  last_status: string | null; last_error: string | null; last_at: string | null;
+  last_ok_at: string | null; last_ok_id: number | null; count: number;
+}
+export interface BackupStatus {
+  enabled: boolean; schedule: string; timezone: string; next_run: string | null;
+  last_run: { trigger: string; started_at: string; finished_at: string; ok: number; failed: number; skipped: number } | null;
+  retention: { daily: number; weekly: number; monthly: number };
+  hosts: HostBackupStatus[];
+}
+export interface DiffChange {
+  area: string; path: string; type: "added" | "removed" | "changed";
+  a?: string; b?: string; lines?: string[]; secret?: boolean;
+}
+export interface DiffResult { a: Backup; b: Backup; changes: DiffChange[]; unchanged: number }
+export interface RestoreResult {
+  restored: boolean; areas: { area: string; ok: boolean }[]; errors: string[];
+  pre_restore_backup_id: number; reboot_recommended: boolean;
+}

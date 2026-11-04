@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
 import ApiConsole from "../components/ApiConsole";
 import ConfirmDialog from "../components/ConfirmDialog";
+import HostBackups from "../components/HostBackups";
 import LogViewer from "../components/LogViewer";
 import OutputsView from "../components/OutputsView";
 import { bytes, duration, stripExt } from "../format";
@@ -61,6 +62,7 @@ export default function ControllerDetail({ snap }: { snap: Snapshot | null }) {
     { id: "overview", label: "Overview" },
     { id: "outputs", label: "Outputs" },
     ...(detail?.has_logs || host.kind === "fpp" ? [{ id: "logs", label: "Logs" }] : []),
+    ...(host.kind === "fpp" || host.kind === "falcon" ? [{ id: "backups", label: "Backups" }] : []),
     { id: "console", label: "API console" },
   ];
   const tab = tabs.some((t) => t.id === params.get("tab")) ? params.get("tab")! : "overview";
@@ -174,6 +176,7 @@ export default function ControllerDetail({ snap }: { snap: Snapshot | null }) {
           : <p className={detailError ? "bad-text" : "muted"}>{detailError ?? "Loading…"}</p>
       )}
       {tab === "logs" && <LogViewer hostId={id} />}
+      {tab === "backups" && <HostBackups host={host} />}
       {tab === "console" && <ApiConsole host={host} />}
 
       <ConfirmDialog

@@ -6,6 +6,8 @@ import { useSnapshot } from "./api";
 import Dashboard from "./pages/Dashboard";
 import Controllers from "./pages/Controllers";
 import ControllerDetail from "./pages/ControllerDetail";
+import Backups from "./pages/Backups";
+import BackupCompare from "./pages/BackupCompare";
 
 function App() {
   const { snap, connected } = useSnapshot();
@@ -16,6 +18,7 @@ function App() {
         <nav>
           <NavLink to="/" end>Dashboard</NavLink>
           <NavLink to="/controllers">Controllers</NavLink>
+          <NavLink to="/backups">Backups</NavLink>
         </nav>
         <div className={`conn ${connected ? "ok" : "bad"}`} title={connected ? "Live updates connected" : "Reconnecting…"}>
           <span className="dot" /> {connected ? "Live" : "Offline"}
@@ -26,6 +29,8 @@ function App() {
           <Route path="/" element={<Dashboard snap={snap} />} />
           <Route path="/controllers" element={<Controllers snap={snap} />} />
           <Route path="/hosts/:id" element={<ControllerDetail snap={snap} />} />
+          <Route path="/backups" element={<Backups snap={snap} />} />
+          <Route path="/backups/compare" element={<BackupCompare />} />
           <Route path="*" element={<p className="muted">Page not found.</p>} />
         </Routes>
       </main>

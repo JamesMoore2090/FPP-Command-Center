@@ -4,8 +4,9 @@ A self-hosted web app to discover, monitor, control and back up every controller
 FPP players/remotes plus non-FPP controllers such as the Falcon F48. It replaces FPPMon. The full spec is in
 [`fpp-command-center-requirements.md`](fpp-command-center-requirements.md).
 
-**Status: Phase 2.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
-logs, actions), the generic FPP proxy and the raw API console are done.
+**Status: Phase 3.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
+logs, actions), the generic FPP proxy, the raw API console and configuration backups (nightly + on demand, versioned,
+diff, restore) are done.
 
 ## Architecture
 
@@ -23,6 +24,12 @@ browser ──https──> Tailscale Serve ──> nginx :80 ──/────
   memory, writes a raw sample every 15 s (kept 7 days), and pushes a snapshot to WebSocket clients after each poll.
 * `backend/app/fleet.py`: builds the snapshot. It works out the show banner, each remote's sync status
   relative to the player, and live alerts (offline, temperature, CPU, disk, fppd stopped, version mismatch).
+* `backend/app/backups/`: configuration backups. FPP backups come from FPP's own backup page (`backup.php`), so they
+  are in FPP's native format, and restores post the file back to the same page. A Falcon backup is an export of its XML
+  config files plus network settings, kept for reference and diffing; it is restored by hand. Files are gzipped
+  under `/var/lib/fppcc/backups`, mode 0600 (they contain WiFi keys and passwords). Nightly at `FPPCC_BACKUP_TIME`
+  in `FPPCC_TIMEZONE`. Retention: everything from the last 48 h, then the newest backup per day (14), week (8) and
+  month (12); pinned backups are kept forever. Every restore first takes a pinned backup of the target.
 * `backend/app/discovery.py`: gathers FPP MultiSync results from the player plus an HTTP probe of
   `FPPCC_DISCOVERY_SUBNETS`. It dedupes by UUID/address and prefers addresses in subnet order. It adds new devices
   and follows known ones that changed IP. Disabled hosts are left alone.
@@ -43,6 +50,13 @@ browser ──https──> Tailscale Serve ──> nginx :80 ──/────
 | any | `/api/hosts/{id}/fpp/{path}` | proxy to `http://<controller>/api/{path}` (FPP only; method, query and body forwarded, streamed) |
 | any | `/api/hosts/{id}/http/{path}` | proxy to `http://<controller>/{path}` (any controller, e.g. Falcon `status.xml`) |
 | GET | `/api/fpp/endpoints` | FPP 10.3 route catalog (API console autocomplete) |
+| GET | `/api/backups/status` | schedule, retention, last good backup per controller |
+| GET | `/api/backups?host_id=` | backup history |
+| POST | `/api/backups/run` | back up now: `{}` for the fleet or `{"host_ids": [1, 2]}` |
+| GET | `/api/backups/{id}/download` | the backup file (FPP's own restore page accepts it as-is) |
+| GET | `/api/backups/diff?a=&b=` | differences between two backups (same or different controllers); secrets masked |
+| POST | `/api/backups/{id}/restore` | `{"confirm": true, "target_host_id": 3, "area": "all", "keep_network": true, "keep_mode": true}` |
+| PATCH/DELETE | `/api/backups/{id}` | pin (`{"pinned": true}`), add a note, delete |
 
 Examples: `curl https://<vm>/api/hosts/3/fpp/file/logs/fppd.log?tail=100`,
 `curl -X POST https://<vm>/api/hosts/1/actions/restart_fppd`. The UI asks for confirmation before destructive

@@ -49,6 +49,8 @@ class Collector:
         self.discovery_lock = asyncio.Lock()
         self._wake = asyncio.Event()
         self._tasks: list[asyncio.Task] = []
+        # other services (backups, later MQTT) contribute alerts: fn(hosts) -> list[Alert]
+        self.alert_sources: list = []
 
     # lifecycle -----------------------------------------------------------
     async def start(self):
@@ -120,7 +122,14 @@ class Collector:
         return snap
 
     def snapshot(self) -> Snapshot:
-        return build_snapshot(list(self.hosts.values()), self.states, self.settings)
+        hosts = list(self.hosts.values())
+        extra = []
+        for source in self.alert_sources:
+            try:
+                extra.extend(source(hosts))
+            except Exception:
+                log.exception("alert source failed")
+        return build_snapshot(hosts, self.states, self.settings, extra)
 
     async def _persist(self, hosts: list[HostInfo], results: list[HostStatus]):
         now = datetime.now(timezone.utc)

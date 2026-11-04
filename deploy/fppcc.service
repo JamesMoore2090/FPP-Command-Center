@@ -10,6 +10,9 @@ User=__USER__
 Group=__USER__
 WorkingDirectory=__REPO__/backend
 EnvironmentFile=/etc/fppcc/fppcc.env
+# /var/lib/fppcc (backups): created and owned by the service user, mode 0700 (backups contain passwords)
+StateDirectory=fppcc
+StateDirectoryMode=0700
 ExecStartPre=__REPO__/backend/.venv/bin/alembic upgrade head
 ExecStart=__REPO__/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --proxy-headers
 Restart=always

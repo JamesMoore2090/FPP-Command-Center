@@ -28,7 +28,21 @@ class Settings(BaseSettings):
     cpu_warn_pct: float = 90.0
     disk_warn_pct: float = 90.0
 
+    # Backups (phase 3)
+    data_dir: str = "/var/lib/fppcc"    # systemd StateDirectory; backups live in <data_dir>/backups
+    timezone: str = "America/New_York"  # the show's local time, used for the nightly schedule
+    backup_enabled: bool = True         # nightly scheduled backups
+    backup_time: str = "03:00"          # local time (timezone above) for the nightly fleet backup
+    backup_keep_daily: int = 14
+    backup_keep_weekly: int = 8
+    backup_keep_monthly: int = 12
+    backup_stale_hours: float = 48      # alert when a host's newest good backup is older than this
+
     run_collector: bool = True          # set false in tests
+
+    @property
+    def backup_dir(self) -> str:
+        return f"{self.data_dir.rstrip('/')}/backups"
 
     @property
     def subnets(self) -> list[str]:
