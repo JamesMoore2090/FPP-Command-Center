@@ -4,9 +4,10 @@ A self-hosted web app to discover, monitor, control and back up every controller
 FPP players/remotes plus non-FPP controllers such as the Falcon F48. It replaces FPPMon. The full spec is in
 [`fpp-command-center-requirements.md`](fpp-command-center-requirements.md).
 
-**Status: Phase 3.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
-logs, actions), the generic FPP proxy, the raw API console and configuration backups (nightly + on demand, versioned,
-diff, restore) are done.
+**Status: Phase 4.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
+logs, actions), the generic FPP proxy, the raw API console, configuration backups (nightly + on demand, versioned,
+diff, restore), the Show page (playback, schedule editor, FPP commands, volume, test mode) and the app's own REST API
+for Home Assistant and scripts are done.
 
 ## Architecture
 
@@ -57,6 +58,53 @@ browser ──https──> Tailscale Serve ──> nginx :80 ──/────
 | GET | `/api/backups/diff?a=&b=` | differences between two backups (same or different controllers); secrets masked |
 | POST | `/api/backups/{id}/restore` | `{"confirm": true, "target_host_id": 3, "area": "all", "keep_network": true, "keep_mode": true}` |
 | PATCH/DELETE | `/api/backups/{id}` | pin (`{"pinned": true}`), add a note, delete |
+
+### Show and fleet API (for Home Assistant and scripts)
+
+Everything under `/api/show` acts on the player unless a `host_id` is given.
+
+| Method | Path | |
+|---|---|---|
+| GET | `/api/show/status` | flat status: `playing`, `status`, `playlist`, `sequence`, `seconds_remaining`, controllers online/offline, `out_of_sync`, alert counts |
+| POST | `/api/show/start` | `{"name": "Christmas_2026", "repeat": true}` (a playlist, or a sequence such as `"Song.fseq"`) |
+| POST | `/api/show/stop` | `{"mode": "graceful"}` (or `"now"`, `"after_loop"`) |
+| POST | `/api/show/pause`, `/resume`, `/next`, `/prev` | transport |
+| GET/POST | `/api/show/volume` | `{"volume": 70}` |
+| GET | `/api/show/playlists`, `/api/show/playlists/{name}` | playlists, playable items, sequences; one playlist's items |
+| GET | `/api/show/schedule` | entries (with warnings for missing or empty playlists) and upcoming items |
+| PUT | `/api/show/schedule` | `{"entries": [...], "confirm": true}`. Takes a backup of the player first |
+| GET | `/api/show/commands` | the player's FPP commands (with argument descriptions) and command presets |
+| POST | `/api/show/command` | `{"command": "All Lights Off", "args": [], "multisync": false}`: any FPP command |
+| GET | `/api/show/test`, `/api/show/test/patterns[/{pattern}]` | test-mode state per controller; available patterns |
+| POST | `/api/show/test/start` | `{"pattern": "RGB Chase", "interval_ms": 1000, "host_ids": null}`: blank args use each controller's own channel range |
+| POST | `/api/show/test/stop` | `{"host_ids": null}` |
+| GET | `/api/fleet/status` | one compact row per controller |
+| POST | `/api/fleet/actions/{action}` | `restart_fppd`, `reboot`, … on every online controller (or `host_ids`); needs `"confirm": true` |
+
+Home Assistant example (`configuration.yaml`):
+
+```yaml
+rest_command:
+  show_start:
+    url: "http://<vm>/api/show/start"
+    method: post
+    content_type: application/json
+    payload: '{"name": "{{ playlist }}", "repeat": true}'
+  show_stop:
+    url: "http://<vm>/api/show/stop"
+    method: post
+    content_type: application/json
+    payload: '{"mode": "graceful"}'
+sensor:
+  - platform: rest
+    name: Light show
+    resource: "http://<vm>/api/show/status"
+    value_template: "{{ value_json.status }}"
+    json_attributes: [playlist, sequence, seconds_remaining, controllers_online, controllers_offline, alerts]
+    scan_interval: 15
+```
+
+Native Home Assistant devices and alerts over MQTT come in phase 6.
 
 Examples: `curl https://<vm>/api/hosts/3/fpp/file/logs/fppd.log?tail=100`,
 `curl -X POST https://<vm>/api/hosts/1/actions/restart_fppd`. The UI asks for confirmation before destructive

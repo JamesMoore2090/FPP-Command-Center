@@ -259,3 +259,28 @@ pre.diff-lines { margin: 0; background: var(--bg); border: 1px solid var(--borde
 .dialog .alert { margin: 10px 0; }
 .confirm-type { margin-top: 12px; color: var(--text); }
 .confirm-type input { margin-top: 4px; font-family: ui-monospace, monospace; }
+
+/* ---- phase 4: show ---- */
+.now { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.now b { font-size: 18px; overflow-wrap: anywhere; }
+.transport { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+.transport .grow { flex: 1 1 0; }
+.volume { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; }
+.volume input[type="range"] { flex: 1; max-width: 320px; accent-color: var(--accent); padding: 0; }
+.playlist-preview ol { margin: 6px 0 0; padding-left: 22px; max-height: 360px; overflow: auto; }
+.playlist-preview li { padding: 2px 0; }
+ul.upcoming { list-style: none; margin: 0; padding: 0; }
+ul.upcoming li { display: flex; gap: 14px; padding: 5px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+ul.upcoming li:last-child { border-bottom: 0; }
+ul.upcoming .when { min-width: 240px; font-variant-numeric: tabular-nums; }
+.schedule td { vertical-align: top; }
+.schedule td.what { white-space: normal; min-width: 220px; }
+.time-field { display: flex; gap: 6px; }
+.time-field select { width: auto; }
+.form-grid label.check { flex-direction: row; align-items: center; align-self: end; }
+h3.sub { font-size: 13px; color: var(--muted); font-weight: 500; margin: 14px 0 6px; }
+.host-checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px 14px; }
+.host-checks .check { color: var(--text); }
+.check input { flex: none; }
+.transport button { display: inline-flex; align-items: center; gap: 6px; }
+.time-field select { min-width: 92px; }

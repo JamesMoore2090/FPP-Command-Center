@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from . import __version__
-from .api import backups, controllers, hosts, ws
+from .api import backups, controllers, fleet, hosts, show, ws
 from .backups.service import BackupService
 from .collector import Collector
 from .config import get_settings
@@ -40,6 +40,8 @@ app = FastAPI(title="FPP Command Center", version=__version__, lifespan=lifespan
 app.include_router(hosts.router)
 app.include_router(controllers.router)
 app.include_router(backups.router)
+app.include_router(show.router)
+app.include_router(fleet.router)
 app.include_router(ws.router)
 
 

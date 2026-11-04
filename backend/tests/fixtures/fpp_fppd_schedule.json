@@ -1,0 +1,122 @@
+{
+ "Message": "",
+ "Status": "OK",
+ "respCode": 200,
+ "schedule": {
+  "enabled": 1,
+  "entries": [
+   {
+    "day": 7,
+    "dayStr": "Everyday",
+    "enabled": 1,
+    "endDate": "2027-01-03",
+    "endDateInt": 20270103,
+    "endDateOffset": 0,
+    "endTime": "17:30:00",
+    "endTimeOffset": 0,
+    "endTimeStr": "17:30:00",
+    "id": 0,
+    "playlist": "November",
+    "repeat": 1,
+    "repeatInterval": 0,
+    "startDate": "2026-11-14",
+    "startDateInt": 20261114,
+    "startDateOffset": 0,
+    "startTime": "17:00:00",
+    "startTimeOffset": 0,
+    "startTimeStr": "17:00:00",
+    "stopType": 0,
+    "stopTypeStr": "Graceful",
+    "type": "playlist"
+   },
+   {
+    "day": 7,
+    "dayStr": "Everyday",
+    "enabled": 1,
+    "endDate": "2027-01-03",
+    "endDateInt": 20270103,
+    "endDateOffset": 0,
+    "endTime": "21:30:00",
+    "endTimeOffset": 0,
+    "endTimeStr": "21:30:00",
+    "id": 1,
+    "playlist": "Christmas_2026",
+    "repeat": 1,
+    "repeatInterval": 0,
+    "startDate": "2026-11-26",
+    "startDateInt": 20261126,
+    "startDateOffset": 0,
+    "startTime": "17:30:00",
+    "startTimeOffset": 0,
+    "startTimeStr": "17:30:00",
+    "stopType": 0,
+    "stopTypeStr": "Graceful",
+    "type": "playlist"
+   }
+  ],
+  "items": [
+   {
+    "args": [
+     "November",
+     "true",
+     "false"
+    ],
+    "command": "Start Playlist",
+    "endDateInt": 20261114,
+    "endDateStr": "20261114",
+    "endTime": 1794695400,
+    "endTimeStr": "Sat Nov 14 @ 05:30 PM",
+    "id": 0,
+    "multisyncCommand": false,
+    "multisyncHosts": "",
+    "priority": 0,
+    "startDateInt": 20261114,
+    "startDateStr": "20261114",
+    "startTime": 1794693600,
+    "startTimeStr": "Sat Nov 14 @ 05:00 PM"
+   },
+   {
+    "args": [
+     "November",
+     "true",
+     "false"
+    ],
+    "command": "Start Playlist",
+    "endDateInt": 20261115,
+    "endDateStr": "20261115",
+    "endTime": 1794781800,
+    "endTimeStr": "Sun Nov 15 @ 05:30 PM",
+    "id": 0,
+    "multisyncCommand": false,
+    "multisyncHosts": "",
+    "priority": 0,
+    "startDateInt": 20261115,
+    "startDateStr": "20261115",
+    "startTime": 1794780000,
+    "startTimeStr": "Sun Nov 15 @ 05:00 PM"
+   },
+   {
+    "args": [
+     "November",
+     "true",
+     "false"
+    ],
+    "command": "Start Playlist",
+    "endDateInt": 20261116,
+    "endDateStr": "20261116",
+    "endTime": 1794868200,
+    "endTimeStr": "Mon Nov 16 @ 05:30 PM",
+    "id": 0,
+    "multisyncCommand": false,
+    "multisyncHosts": "",
+    "priority": 0,
+    "startDateInt": 20261116,
+    "startDateStr": "20261116",
+    "startTime": 1794866400,
+    "startTimeStr": "Mon Nov 16 @ 05:00 PM"
+   }
+  ],
+  "scheduleDistance": 28,
+  "schedulesExtendBeyondDistance": true
+ }
+}

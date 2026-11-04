@@ -107,7 +107,7 @@ export interface Endpoint { method: string; path: string; handler: string }
 
 export interface Backup {
   id: number; host_id: number | null; host_name: string; kind: string; created_at: string;
-  trigger: "scheduled" | "manual" | "pre-restore"; status: "ok" | "failed" | "skipped"; error: string | null;
+  trigger: "scheduled" | "manual" | "pre-restore" | "pre-change"; status: "ok" | "failed" | "skipped"; error: string | null;
   size: number | null; changed: boolean | null; version: string | null; platform: string | null;
   pinned: boolean; note: string | null;
 }
@@ -130,4 +130,25 @@ export interface DiffResult { a: Backup; b: Backup; changes: DiffChange[]; uncha
 export interface RestoreResult {
   restored: boolean; areas: { area: string; ok: boolean }[]; errors: string[];
   pre_restore_backup_id: number; reboot_recommended: boolean;
+}
+
+export interface ScheduleEntryRaw {
+  enabled: number; sequence?: number; playlist?: string; command?: string; args?: string[];
+  multisyncCommand?: boolean; multisyncHosts?: string;
+  day: number; startTime: string; startTimeOffset?: number; endTime: string; endTimeOffset?: number;
+  repeat: number; startDate: string; endDate: string; stopType: number;
+  [key: string]: unknown;
+}
+export interface ScheduleEntry { index: number; kind: "playlist" | "sequence" | "command"; day_str: string; stop_str: string; warning: string | null; raw: ScheduleEntryRaw }
+export interface UpcomingItem { entry: number; start: number; end: number; start_str: string; end_str: string; command: string; args: string[] }
+export interface ScheduleData { host_id: number; host: string; enabled: boolean; entries: ScheduleEntry[]; upcoming: UpcomingItem[] }
+export interface CommandArg {
+  name: string; description?: string; type: string; optional?: boolean; default?: string;
+  min?: number; max?: number; contents?: string[]; contentListUrl?: string; allowBlanks?: boolean;
+}
+export interface FppCommand { name: string; category?: string; description?: string; args?: CommandArg[] }
+export interface HostResult { host_id: number; host: string; ok: boolean; message: string }
+export interface PlaylistDetail {
+  name: string; description: string | null; repeat: boolean; random: boolean; total_duration: number | null;
+  items: { section: string; type: string; enabled: boolean; name: string; duration: number | null }[];
 }

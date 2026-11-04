@@ -6,7 +6,7 @@ import type { Backup, HostView } from "../types";
 import ConfirmDialog from "./ConfirmDialog";
 import RestoreDialog from "./RestoreDialog";
 
-const TRIGGER: Record<string, string> = { scheduled: "Nightly", manual: "Manual", "pre-restore": "Before restore" };
+const TRIGGER: Record<string, string> = { scheduled: "Nightly", manual: "Manual", "pre-restore": "Before restore", "pre-change": "Before change" };
 
 /** Backup history (all controllers, or one) with compare, download, pin, delete and restore. */
 export default function BackupList({ hostId, hosts, refreshKey = 0 }: { hostId?: number; hosts: HostView[]; refreshKey?: number }) {
