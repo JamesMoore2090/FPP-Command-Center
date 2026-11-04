@@ -68,11 +68,17 @@ chmod 440 /etc/sudoers.d/fppcc-deploy
 visudo -cq
 
 echo "==> Tailscale Serve (HTTPS on the tailnet -> nginx :80)"
-if tailscale serve --bg --https=443 http://127.0.0.1:80 >/dev/null 2>&1; then
+# Without HTTPS certificates enabled on the tailnet, `tailscale serve` prints an approval link and blocks
+# waiting for it, so check first and run it with a timeout and visible output.
+SERVE_CMD="tailscale serve --bg --https=443 http://127.0.0.1:80"
+if ! tailscale status --self --json 2>/dev/null | python3 -c "import json,sys; sys.exit(0 if json.load(sys.stdin).get('CertDomains') else 1)"; then
+    echo "   HTTPS is not enabled on this tailnet yet. Run this yourself, open the link it prints, approve, and it finishes:"
+    echo "   sudo $SERVE_CMD"
+elif timeout 30 $SERVE_CMD; then
     tailscale serve status | head -5
 else
-    echo "   tailscale serve failed — enable HTTPS certificates in the Tailscale admin console (DNS page), then re-run:"
-    echo "   sudo tailscale serve --bg --https=443 http://127.0.0.1:80"
+    echo "   tailscale serve did not complete; run it yourself to see why:"
+    echo "   sudo $SERVE_CMD"
 fi
 
 echo "==> waiting for API"
