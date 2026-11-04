@@ -1,0 +1,1 @@
+{"root":["./src/api.ts","./src/format.ts","./src/main.tsx","./src/types.ts","./src/components/ConfirmDialog.tsx","./src/components/HostCard.tsx","./src/pages/Controllers.tsx","./src/pages/Dashboard.tsx"],"version":"5.7.2"}

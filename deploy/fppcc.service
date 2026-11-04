@@ -1,0 +1,22 @@
+[Unit]
+Description=FPP Command Center (API + collector)
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=__USER__
+Group=__USER__
+WorkingDirectory=__REPO__/backend
+EnvironmentFile=/etc/fppcc/fppcc.env
+ExecStartPre=__REPO__/backend/.venv/bin/alembic upgrade head
+ExecStart=__REPO__/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --proxy-headers
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
