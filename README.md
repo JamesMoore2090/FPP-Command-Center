@@ -4,10 +4,11 @@ A self-hosted web app to discover, monitor, control and back up every controller
 FPP players/remotes plus non-FPP controllers such as the Falcon F48. It replaces FPPMon. The full spec is in
 [`fpp-command-center-requirements.md`](fpp-command-center-requirements.md).
 
-**Status: Phase 4.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
+**Status: Phase 5.** Discovery, the live dashboard, controller management, the controller detail page (status, outputs/ports,
 logs, actions), the generic FPP proxy, the raw API console, configuration backups (nightly + on demand, versioned,
-diff, restore), the Show page (playback, schedule editor, FPP commands, volume, test mode) and the app's own REST API
-for Home Assistant and scripts are done.
+diff, restore), the Show page (playback, schedule editor, FPP commands, volume, test mode), the app's own REST API
+for Home Assistant and scripts, the Content page (missing-file check, copy sequences from the player to remotes) and
+the Fleet page (versions, FPP and OS updates, restart/reboot, settings compare) are done.
 
 ## Architecture
 
@@ -31,6 +32,16 @@ browser ──https──> Tailscale Serve ──> nginx :80 ──/────
   under `/var/lib/fppcc/backups`, mode 0600 (they contain WiFi keys and passwords). Nightly at `FPPCC_BACKUP_TIME`
   in `FPPCC_TIMEZONE`. Retention: everything from the last 48 h, then the newest backup per day (14), week (8) and
   month (12); pinned backups are kept forever. Every restore first takes a pinned backup of the target.
+* `backend/app/content.py`: compares each remote's sequences with the player's and checks every playlist's files.
+  Sizes are not compared, because xLights' FPP Connect gives each remote a trimmed copy. Remotes with no sequences are
+  assumed to be fed over the network. A copy streams the player's file through the VM into the remote's upload folder,
+  checks the byte count, then has FPP move it into place, so a failed copy never leaves a truncated sequence.
+* `backend/app/updates.py`: FPP update (`manualUpdate.php`), version upgrade (`upgradefpp.php`, then reboot) and OS
+  upgrade (`upgradeOS.php`), the same pages FPP's own UI uses. Success is read from their streamed output. Updates
+  run one controller at a time, remotes first and the player last; each controller is backed up first, and the run stops
+  at the first failure. The show must be idle unless `force` is set.
+* `backend/app/jobs.py`: long operations run as in-memory background jobs with per-controller status, progress and
+  logs. A service restart forgets the job list, but not what the jobs did.
 * `backend/app/discovery.py`: gathers FPP MultiSync results from the player plus an HTTP probe of
   `FPPCC_DISCOVERY_SUBNETS`. It dedupes by UUID/address and prefers addresses in subnet order. It adds new devices
   and follows known ones that changed IP. Disabled hosts are left alone.
@@ -58,6 +69,14 @@ browser ──https──> Tailscale Serve ──> nginx :80 ──/────
 | GET | `/api/backups/diff?a=&b=` | differences between two backups (same or different controllers); secrets masked |
 | POST | `/api/backups/{id}/restore` | `{"confirm": true, "target_host_id": 3, "area": "all", "keep_network": true, "keep_mode": true}` |
 | PATCH/DELETE | `/api/backups/{id}` | pin (`{"pinned": true}`), add a note, delete |
+| GET | `/api/content` | player's sequences and media, what each remote has, and problems (files playlists need but can't find) |
+| POST | `/api/content/push` | copy sequences to remotes: `{"confirm": true}` copies whatever each remote is missing; optional `host_ids`, `files`, `overwrite`, `force`. Returns a job |
+| POST | `/api/content/delete` | `{"host_id": 4, "files": ["Old.fseq"], "confirm": true}` (remotes only) |
+| GET | `/api/fleet/versions?os=true` | FPP version, branch, commit, OS image and available updates per controller; `os=true` also finds the matching OS image |
+| POST | `/api/fleet/update` | `{"op": "update" \| "upgrade" \| "os", "host_ids": [...], "version": "10.4", "os_image": "Pi-10.3_2026-10b.fppos", "confirm": true}`. Returns a job |
+| GET | `/api/fleet/settings?host_ids=` | settings that differ between controllers (from their latest backups) plus installed plugins; secrets masked |
+| GET | `/api/jobs`, `/api/jobs/{id}` | background jobs with per-controller status, progress and log |
+| POST | `/api/jobs/{id}/cancel` | skip the steps that haven't started (a controller mid-update is left to finish) |
 
 ### Show and fleet API (for Home Assistant and scripts)
 

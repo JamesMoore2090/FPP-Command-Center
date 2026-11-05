@@ -284,3 +284,40 @@ h3.sub { font-size: 13px; color: var(--muted); font-weight: 500; margin: 14px 0 
 .check input { flex: none; }
 .transport button { display: inline-flex; align-items: center; gap: 6px; }
 .time-field select { min-width: 92px; }
+
+/* ---- phase 5: content, fleet ops, jobs ---- */
+.ok-text { color: var(--ok); }
+.plain td.wrap { white-space: normal; min-width: 160px; }
+.plain th.c, .plain td.c { text-align: center; }
+.matrix td.c { padding: 5px 8px; }
+.matrix .have { color: var(--ok); font-weight: 600; }
+.matrix .lack { display: inline-block; padding: 0 6px; border-radius: 4px; font-size: 12px; background: var(--bad-bg); color: var(--bad); }
+.settings-matrix td.c { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+.settings-matrix th.c { vertical-align: bottom; }
+.settings-matrix td.odd { background: var(--warn-bg); color: var(--warn); font-weight: 600; }
+.settings-matrix td:first-child { position: sticky; left: 0; background: var(--surface); z-index: 1; }
+details.panel > summary { cursor: pointer; list-style: none; }
+details.panel > summary::-webkit-details-marker { display: none; }
+details.panel > summary::before { content: "▸ "; color: var(--muted); }
+details.panel[open] > summary::before { content: "▾ "; }
+details.panel[open] > summary { margin-bottom: 10px; }
+h2.inline { display: inline; }
+.job-steps { display: flex; flex-direction: column; }
+.job-step { border-top: 1px solid var(--border); padding: 8px 0; }
+.job-step-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.job-step-head .grow { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; }
+.job-step.st-failed b { color: var(--bad); }
+.job-step .progress { max-width: none; margin-top: 6px; }
+.job-log { margin-top: 6px; max-height: 320px; }
+.bar.indeterminate span { animation: slide 1.4s ease-in-out infinite; }
+@keyframes slide { 0% { margin-left: -30%; } 100% { margin-left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .bar.indeterminate span { animation: none; width: 100% !important; opacity: .4; } }
+.fleet-actions { align-items: center; margin-top: 12px; }
+.fleet-actions .grow { flex: 1 1 160px; }
+.versions td { vertical-align: top; }
+.op-confirm select { margin-top: 4px; }
+.page-head .actions { flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .topbar nav { flex-wrap: wrap; overflow-x: visible; }
+  .topbar nav a { padding: 5px 9px; }
+}

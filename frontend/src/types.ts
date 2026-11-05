@@ -152,3 +152,53 @@ export interface PlaylistDetail {
   name: string; description: string | null; repeat: boolean; random: boolean; total_duration: number | null;
   items: { section: string; type: string; enabled: boolean; name: string; duration: number | null }[];
 }
+
+// ---- phase 5: jobs, content, fleet ops
+export type StepStatus = "pending" | "running" | "ok" | "failed" | "skipped";
+export interface JobStep {
+  id: number; label: string; host_id: number | null; host: string | null; status: StepStatus;
+  message: string | null; progress: number | null; started_at: string | null; finished_at: string | null; log: string[];
+}
+export interface JobSummary {
+  id: string; kind: string; title: string; status: "running" | "ok" | "failed" | "partial" | "cancelled";
+  created_at: string; finished_at: string | null; cancel_requested: boolean;
+  counts: Record<StepStatus, number>; total: number;
+}
+export interface Job extends Omit<JobSummary, "counts" | "total"> { steps: JobStep[] }
+
+export interface ContentProblem {
+  severity: "critical" | "warning"; host_id: number; host: string; kind: string; file: string; playlists: string[]; message: string;
+}
+export interface ContentRemote {
+  id: number; name: string; online: boolean; error: string | null; uses_sequences: boolean; count: number;
+  missing: string[]; extra: string[]; files: Record<string, number | null>;
+}
+export interface ContentFile { name: string; size: number | null; mtime: string | null; playlists: string[] }
+export interface ContentOverview {
+  player: { id: number; name: string }; scheduled_playlists: string[];
+  sequences: ContentFile[]; media: ContentFile[]; remotes: ContentRemote[]; problems: ContentProblem[];
+}
+
+export interface OsImage { tag: string; name: string; filename: string; url: string; size: number | null; prerelease: boolean }
+export interface VersionRow {
+  id: number; name: string; address: string; kind: string; role: string | null; online: boolean; updatable: boolean;
+  is_player: boolean; error?: string; platform?: string | null; variant?: string | null; mode?: string | null;
+  version?: string | null; branch?: string | null; os_version?: string | null; os_release?: string | null;
+  local_commit?: string | null; remote_commit?: string | null; update_available?: boolean; update_checked?: boolean;
+  upgrade?: { version: string; target: string | null; major: boolean } | null; end_of_life?: boolean;
+  activity?: { in_progress: boolean; op: string | null; stage: string | null; failed: boolean };
+  plugin_updates?: string[]; os_update?: OsImage | null; os_images?: OsImage[]; os_error?: string;
+}
+export interface VersionsData {
+  hosts: VersionRow[];
+  summary: { versions: string[]; os_versions: string[]; updates_available: number; upgrades_available: number; in_progress: string[] };
+  running_job: JobSummary | null;
+}
+export interface SettingsRow {
+  key: string; area: string; name: string; differs: boolean; expected: boolean; secret: boolean;
+  values: Record<string, string | null>;
+}
+export interface SettingsCompare {
+  hosts: { id: number; name: string; backup_id: number | null; taken_at: string | null; version: string | null; error?: string }[];
+  rows: SettingsRow[];
+}

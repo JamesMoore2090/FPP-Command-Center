@@ -4,10 +4,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from . import __version__
-from .api import backups, controllers, fleet, hosts, show, ws
+from .api import backups, content, controllers, fleet, hosts, jobs, ops, show, ws
 from .backups.service import BackupService
 from .collector import Collector
 from .config import get_settings
+from .jobs import JobManager
 from .db import Base, SessionLocal, engine
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -24,6 +25,7 @@ async def lifespan(app: FastAPI):
     collector.alert_sources.append(backup_service.alerts)
     app.state.collector = collector
     app.state.backups = backup_service
+    app.state.jobs = JobManager()
     if settings.run_collector:
         await collector.start()
         await backup_service.start()
@@ -31,6 +33,7 @@ async def lifespan(app: FastAPI):
         await collector.reload_hosts()
         await backup_service.refresh_latest()
     yield
+    await app.state.jobs.stop()
     await backup_service.stop()
     await collector.stop()
 
@@ -42,6 +45,9 @@ app.include_router(controllers.router)
 app.include_router(backups.router)
 app.include_router(show.router)
 app.include_router(fleet.router)
+app.include_router(ops.router)
+app.include_router(content.router)
+app.include_router(jobs.router)
 app.include_router(ws.router)
 
 
